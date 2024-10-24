@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .cart-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .cart-item {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .item-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .item-name, .item-price, .quantity-input, .remove-btn, .reset-btn {
+            margin-right: 10px;
+        }
+
+        .item-name {
+            flex: 2;
+            text-align: left;
+        }
+
+        .item-price {
+            flex: 1;
+            text-align: left;
+        }
+
+        .cart-item input[type="number"] {
+            width: 60px;
+            padding: 5px;
+        }
+
+        .remove-btn, .reset-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .remove-btn:hover, .reset-btn:hover {
+            background-color: #c82333;
+        }
+
+        .reset-btn {
+            background-color: #ffc107;
+        }
+
+        .reset-btn:hover {
+            background-color: #e0a800;
+        }
+
+        .add-ons {
+            display: flex;
+            flex-direction: column;
+            margin-top: 10px;
+        }
+
+        .add-on {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .add-on input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .total {
+            margin-top: 30px;
+            text-align: right;
+            font-size: 1.5rem;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .checkout-btn:hover {
+            background-color: #218838;
+        }
+
+    </style>
+</head>
+<body>
+    <a href="polloshermanoswebsite.html" style="font-size: xx-large;">Return to Home</a>
+
+    <div class="cart-container">
+        <h1>Your Shopping Cart</h1>
+        
+        <!-- Shopping Cart Items -->
+        <div class="cart-item" id="item1">
+            <div class="item-details">
+                <span class="item-name">French/Curly Fries</span>
+                <span class="item-price" data-price="2.50">$2.50</span>
+                <input type="number" class="quantity-input" value="0" min="0" data-id="1">
+            </div>
+
+            <div class="add-ons">
+                <div class="add-on">
+                    <input type="checkbox" class="addon-checkbox" data-price="3.49" data-name="Combo" data-id="1">
+                    <label>Add-on: Combo (+$3.49)</label>
+                </div>
+                <div class="add-on">
+                    <input type="checkbox" class="addon-checkbox" data-price="2" data-name="Chilli P" data-id="1">
+                    <label>Add-on: Chilli P (+$2.00)</label>
+                </div>
+                <div class="add-on">
+                    <input type="checkbox" class="addon-checkbox" data-price="1" data-name="Blue Sky" data-id="1">
+                    <label>Add-on: Blue Sky (+$1.00)</label>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="remove-btn" data-id="1">Remove</button>
+                <button class="reset-btn" data-id="1">Reset</button>
+            </div>
+        </div>
+
+        <div class="cart-item" id="item2">
+            <div class="item-details">
+                <span class="item-name">Hermanos Burger</span>
+                <span class="item-price" data-price="3.79">$3.79</span>
+                <input type="number" class="quantity-input" value="0" min="0" data-id="2">
+            </div>
+
+            <div class="add-ons">
+                <div class="add-on">
+                    <input type="checkbox" class="addon-checkbox" data-price="2.20" data-name="Combo" data-id="2">
+                    <label>Add-on: Combo (+$2.20)</label>
+                </div>
+                <div class="add-on">
+                    <input type="checkbox" class="addon-checkbox" data-price="2" data-name="Chilli P" data-id="2">
+                    <label>Add-on: Chilli P (+$2.00)</label>
+                </div>
+                <div class="add-on">
+                    <input type="checkbox" class="addon-checkbox" data-price="1" data-name="Blue Sky" data-id="2">
+                    <label>Add-on: Blue Sky (+$1.00)</label>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="remove-btn" data-id="2">Remove</button>
+                <button class="reset-btn" data-id="2">Reset</button>
+            </div>
+        </div>
+
+        <div class="cart-item" id="item3">
+            <div class="item-details">
+                <span class="item-name">New Mexico Chicken Burrito</span>
+                <span class="item-price" data-price="3.00">$3.00</span>
+                <input type="number" class="quantity-input" value="0" min="0" data-id="3">
+            </div>
+
+            <div class="add-ons">
+                <div class="add-on">
+                    <input type="checkbox" class="addon-checkbox" data-price="3" data-name="Combo" data-id="3">
+                    <label>Add-on: Combo (+$3.00)</label>
+                </div>
+                <div class="add-on">
+                    <input type="checkbox" class="addon-checkbox" data-price="4" data-name="Chilli P" data-id="3">
+                    <label>Add-on: Chilli P (+$4.00)</label>
+                </div>
+                <div class="add-on">
+                    <input type="checkbox" class="addon-checkbox" data-price="6" data-name="Blue Sky" data-id="3">
+                    <label>Add-on: Blue Sky (+$6.00)</label>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="remove-btn" data-id="3">Remove</button>
+                <button class="reset-btn" data-id="3">Reset</button>
+            </div>
+        </div>
+
+        <!-- Total and Checkout -->
+        <div class="total">
+            <span>Total: $<span id="total-price">0.00</span></span>
+        </div>
+
+        <button class="checkout-btn" id="checkout-btn">Proceed to Checkout</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const quantityInputs = document.querySelectorAll('.quantity-input');
+            const addonCheckboxes = document.querySelectorAll('.addon-checkbox');
+            const totalPriceElement = document.getElementById('total-price');
+            const checkoutButton = document.getElementById('checkout-btn');
+            const removeButtons = document.querySelectorAll('.remove-btn');
+            const resetButtons = document.querySelectorAll('.reset-btn');
+
+            // Load cart data from local storage
+            function loadCart() {
+                const cartData = JSON.parse(localStorage.getItem('shoppingCart')) || {};
+
+                for (const id in cartData) {
+                    const item = cartData[id];
+                    const quantityInput = document.querySelector(`.quantity-input[data-id="${id}"]`);
+                    quantityInput.value = item.quantity;
+
+                    const checkboxes = document.querySelectorAll(`.addon-checkbox[data-id="${id}"]`);
+                    checkboxes.forEach(function(checkbox) {
+                        checkbox.checked = item.addons.some(addon => addon.name === checkbox.getAttribute('data-name'));
+                    });
+                }
+                calculateTotal();
+            }
+
+            // Calculate total price
+            function calculateTotal() {
+                let total = 0;
+                let cartData = {};
+
+                quantityInputs.forEach(function(input) {
+                    const itemId = input.getAttribute('data-id');
+                    const itemQuantity = parseInt(input.value);
+                    const itemName = input.closest('.cart-item').querySelector('.item-name').textContent;
+                    const itemPrice = parseFloat(input.closest('.item-details').querySelector('.item-price').getAttribute('data-price'));
+
+                    if (itemQuantity > 0) {
+                        total += itemQuantity * itemPrice;
+                        cartData[itemId] = {
+                            name: itemName,
+                            price: itemPrice,
+                            quantity: itemQuantity,
+                            addons: []
+                        };
+
+                        // Add add-on prices and names to cart data
+                        addonCheckboxes.forEach(function(checkbox) {
+                            if (checkbox.checked && checkbox.getAttribute('data-id') === itemId) {
+                                const addonPrice = parseFloat(checkbox.getAttribute('data-price'));
+                                const addonName = checkbox.getAttribute('data-name');
+                                total += addonPrice;
+                                cartData[itemId].addons.push({ name: addonName, price: addonPrice });
+                            }
+                        });
+                    }
+                });
+
+                totalPriceElement.textContent = total.toFixed(2);
+                localStorage.setItem('shoppingCart', JSON.stringify(cartData));
+            }
+
+            // Remove item from cart
+            function removeItem(id) {
+                const item = document.getElementById(`item${id}`);
+                if (item) {
+                    item.remove();
+                    calculateTotal();
+                }
+            }
+
+            // Reset item in cart
+            function resetItem(id) {
+                const quantityInput = document.querySelector(`.quantity-input[data-id="${id}"]`);
+                quantityInput.value = 0;
+
+                const checkboxes = document.querySelectorAll(`.addon-checkbox[data-id="${id}"]`);
+                checkboxes.forEach(function(checkbox) {
+                    checkbox.checked = false;
+                });
+
+                calculateTotal();
+            }
+
+            // Event listeners for quantity inputs and checkboxes
+            quantityInputs.forEach(function(input) {
+                input.addEventListener('change', calculateTotal);
+            });
+
+            addonCheckboxes.forEach(function(checkbox) {
+                checkbox.addEventListener('change', calculateTotal);
+            });
+
+            // Event listeners for remove and reset buttons
+            removeButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    const id = button.getAttribute('data-id');
+                    removeItem(id);
+                });
+            });
+
+            resetButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    const id = button.getAttribute('data-id');
+                    resetItem(id);
+                });
+            });
+
+            // Event listener for checkout button
+            checkoutButton.addEventListener('click', function() {
+                const cartData = JSON.parse(localStorage.getItem('shoppingCart'));
+                if (cartData && Object.keys(cartData).length > 0) {
+                    // Redirect to checkout page with cart data
+                    window.location.href = 'PollosHermanosCheckoutPage.html';
+                } else {
+                    alert("Your cart is empty!");
+                }
+            });
+
+            loadCart();
+        });
+    </script>
+</body>
+</html>

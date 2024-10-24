@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Los Pollos Hermanos Menu</title>
+    <a href="polloshermanoswebsite.html" style="font-size: xx-large;">Return to Home</a>
+
+    <style>
+        body {
+            background-color: yellow;
+            font-family: Arial, sans-serif;
+        }
+
+        .banner {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .menu-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            margin-top: 50px;
+            margin-bottom: 30px;
+        }
+
+        .menu-item {
+            text-align: center;
+            padding: 0 20px; /* Add padding between the images */
+        }
+
+        .menu-item img {
+            width: 400px;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .menu-item h3 {
+            color: red;
+            margin-top: 10px;
+        }
+
+        .menu-description {
+            margin-top: 30px;
+            text-align: center;
+            color: red;
+            font-size: 1.2em;
+        }
+
+        .addon-text {
+            color: red;
+            text-align: center; /* Centered under the third image */
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+
+        a {
+            display: inline-block;
+            margin: 20px 0;
+            color: red;
+        }
+    </style>
+
+</head>
+<body>
+    <!-- Adjust the banner image width for a slight stretch -->
+    <div class="banner">
+        <img src="polloshermanoslogo.png" alt="Los Pollos Hermanos Banner" style="width: 95%; height: 150px; object-fit: contain;">
+    </div>
+
+    <h2 class="menu-description">Our Items are sourced from our very own chicken farm outside of ABQ--Free range, free of any chemicals or preservatives.</h2>
+    
+    <div class="menu-container">
+        <div class="menu-item">
+            <img src="los_pollos_hermanos.menu.pic.1.jpg" alt="Menu item 1">
+            <h3>French Fries/Curly Fries [A la carte - $2.50/Add-on: Blue Sky - $1.00]</h3>
+        </div>
+
+        <div class="menu-item">
+            <img src="los_pollos_hermanos.menu.pic.2.jpeg" alt="Menu item 2">
+            <h3>Hermanos Burger [A la carte - $3.79/Combo - $5.99]</h3>
+        </div>
+
+        <div class="menu-item">
+            <img src="polloshermanoschickenburrito.jfif" alt="Chicken Burrito" style="height: 260px;">
+            <h3>New Mexico Chicken Burrito [A la Carte $3.00/Combo: $6.00]</h3>
+            <h3 class="addon-text">Add-on: Chilli P - $4.00</h3> <!-- Centered under third image -->
+        </div>
+    </div>
+
+</body>
+</html>

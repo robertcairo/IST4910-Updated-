@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .checkout-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .item-details {
+            margin-bottom: 20px;
+        }
+
+        .item-name, .item-quantity, .item-price {
+            display: inline-block;
+            margin-right: 15px;
+        }
+
+        .addons-details {
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        .total {
+            text-align: right;
+            font-size: 1.5rem;
+            margin-top: 30px;
+        }
+
+        .place-order-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .place-order-btn:hover {
+            background-color: #218838;
+        }
+
+        .customer-info {
+            margin-bottom: 20px;
+        }
+
+        .customer-info label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .customer-info input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .summary {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <a href="PollosHermanosShoppingCart.html" style="font-size: xx-large;">Return to Cart</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="polloshermanoswebsite.html" style="font-size: xx-large;">Return to Home</a>
+
+    <div class="checkout-container">
+        <h1>Checkout</h1>
+
+        <!-- Customer Information Section -->
+        <div class="customer-info">
+            <h2>Customer Information</h2>
+            <label for="name">Name:</label>
+            <input type="text" id="name" placeholder="Enter your name" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Enter your email" required>
+            <label for="address">Address:</label>
+            <input type="text" id="address" placeholder="Enter your address" required>
+        </div>
+
+        <div id="checkout-items"></div>
+
+        <div class="summary">
+            <div class="total">
+                Subtotal: $<span id="checkout-subtotal">0.00</span><br>
+                Tax (10%): $<span id="checkout-tax">0.00</span><br>
+                Grand Total: $<span id="checkout-total">0.00</span>
+            </div>
+        </div>
+
+        <button class="place-order-btn" id="place-order-btn">Place Order</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const checkoutItemsElement = document.getElementById('checkout-items');
+            const checkoutSubtotalElement = document.getElementById('checkout-subtotal');
+            const checkoutTaxElement = document.getElementById('checkout-tax');
+            const checkoutTotalElement = document.getElementById('checkout-total');
+            const placeOrderButton = document.getElementById('place-order-btn');
+
+            const taxRate = 0.10; // Define tax rate (10%)
+
+            // Load cart data for checkout
+            function loadCheckoutData() {
+                // Retrieve the shopping cart data from localStorage
+                const checkoutData = JSON.parse(localStorage.getItem('shoppingCart')) || {};
+                let subtotal = 0;
+
+                // Loop through each item in the shopping cart
+                for (let id in checkoutData) {
+                    const item = checkoutData[id];
+
+                    // Check if the item has a name and price defined
+                    const itemName = item.name ? item.name : 'Unnamed Item';
+                    const price = parseFloat(item.price) || 0;
+                    const quantity = parseInt(item.quantity) || 0;
+                    let itemCost = price * quantity;
+
+                    // Create item element for display
+                    const itemElement = document.createElement('div');
+                    itemElement.classList.add('item-details');
+                    itemElement.innerHTML = `
+                        <span class="item-name">${itemName}</span>
+                        <span class="item-quantity">Quantity: ${quantity}</span>
+                        <span class="item-price">$${itemCost.toFixed(2)}</span>
+                    `;
+
+                    // If there are add-ons, display them and include them in the price calculation
+                    if (item.addons && Array.isArray(item.addons) && item.addons.length > 0) {
+                        const addonsElement = document.createElement('div');
+                        addonsElement.classList.add('addons-details');
+
+                        let addonCost = 0;
+                        item.addons.forEach(addon => {
+                            const addonPrice = parseFloat(addon.price) || 0;
+                            addonCost += addonPrice * quantity; // Add the add-on price for each quantity
+                            
+                            // Create addon element for display
+                            const addonElement = document.createElement('div');
+                            addonElement.innerHTML = `
+                                <span class="addon-name">Add-on: ${addon.name}</span>
+                                <span class="addon-price">+$${addonPrice.toFixed(2)}</span>
+                            `;
+                            addonsElement.appendChild(addonElement);
+                        });
+
+                        // Add the add-ons to the item element
+                        itemElement.appendChild(addonsElement);
+                        itemCost += addonCost; // Update the item cost with the add-on cost
+                    }
+
+                    // Append the item to the checkout display
+                    checkoutItemsElement.appendChild(itemElement);
+
+                    // Update subtotal
+                    subtotal += itemCost;
+                }
+
+                // Calculate tax and grand total
+                const tax = subtotal * taxRate;
+                const grandTotal = subtotal + tax;
+
+                // Update the summary display
+                checkoutSubtotalElement.textContent = subtotal.toFixed(2);
+                checkoutTaxElement.textContent = tax.toFixed(2);
+                checkoutTotalElement.textContent = grandTotal.toFixed(2);
+            }
+
+            // Event listener for place order button
+            placeOrderButton.addEventListener('click', function () {
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const address = document.getElementById('address').value;
+
+                // Validate customer information
+                if (name && email && address) {
+                    alert("Order placed successfully!");
+                    localStorage.removeItem('shoppingCart'); // Clear shopping cart
+                    window.location.href = 'PollosHermanosShoppingCart.html'; // Redirect to shopping cart or main page
+                } else {
+                    alert("Please fill in all customer information fields.");
+                }
+            });
+
+            loadCheckoutData(); // Load cart data on page load
+        });
+    </script>
+</body>
+</html>
